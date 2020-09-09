@@ -8,6 +8,7 @@ const bodyParser=require("body-parser");
 const counterSchema=require("./models/counters");
 const passport = require("passport");
 const session=require("express-session");
+const uniqid = require('uniqid');
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require('mongoose-findorcreate');
 //const bcrypt = require('bcrypt');
@@ -42,7 +43,7 @@ const userSchema=new mongoose.Schema({
       required:true
   },
   registrationId:{
-      type:Number,
+      type:String,
       unique:true,
   },
   address:{
@@ -101,11 +102,12 @@ app.post("/signup", function (req, res) {
  
   const password=req.body.password;
   //adding the user details to the database with hashing
+  const registrationId=uniqid();
  // console.log(registrationId);
   User.register({
      username:req.body.username,
      email:req.body.email,
-    registrationId:1001,
+    registrationId:registrationId,
      address:req.body.address,
      contact:req.body.cnumber,
      alternatePhno:req.body.anumber,
@@ -115,9 +117,8 @@ app.post("/signup", function (req, res) {
           res.redirect("/");
       }
       else{
-        console.log("hh");
+      
           passport.authenticate("local")(req,res,function(){
-            console.log("s");
               res.redirect("/tariffplanspage");
           });
           
@@ -127,7 +128,6 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  console.log(req.body);
   //level 5 authentication
   const user=new User({
       username: req.body.username,
@@ -150,7 +150,10 @@ app.post("/login", function (req, res) {
       }
   });
 });
-
+app.get("/logout",function(req,res){
+  req.logout();
+  res.render("loginpage");
+});
 app.listen(3000,function(){
   console.log("server has started");
 });
