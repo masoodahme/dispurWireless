@@ -1,22 +1,13 @@
 const mongoose=require("mongoose");
 const {ObjectId}=mongoose.Schema;
-const userSchema=new Schema({
+const tariffSchema=new mongoose.Schema({
     name:{
         type:String,
         unique:true,
         trim:true
     },
-    typeOfData:{
-        type:String
-    },
-    trafficInteger:{
-        type:Number
-    },
-    validity:{
-        type:Number
-    },
-    rental:{
+    price:{
         type:Number
     }
 },{timestamps:true })
-module.exports=mongoose.model("tariff",UserSchema);
+module.exports=tariffSchema;

@@ -52,12 +52,13 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Add Plans</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
-          
-          <input type="text" placeholder="Plan">
-          <input type="text" placeholder="Price">
-          <button type="button" >Add</button>
-          <br><br><br><br><br>
-          <hr>
+          <form method="POST" action="/addPlans">
+            <input type="text" placeholder="Plan" name="name">
+            <input type="text" placeholder="Price" name="price">
+            <button type="submit" >Add</button>
+            <br><br><br><br><br>
+            <hr>
+          </form>
         </div>
         
       </div>
@@ -66,7 +67,34 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>View Users</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
-          <input type="text" placeholder="Search user by id">
+          <form method="POST" action="/getCustomerDetails">
+            <input type="text" placeholder="Search user by id" name="id">
+            <input type="submit" >
+          </form>
+          <ul>
+            <% for(var i=0;i<userData.length;i++){ %>
+              <li>
+                NAME:<%= userData[i].username %>
+              </li>
+              <li>
+                EMAIL:<%= userData[i].email %>
+              </li>
+              <li>
+                Registration Id:<%= userData[i].registrationId %>
+              </li>
+              <li>
+                address:<%= userData[i].address %>
+              </li>
+              <li>
+                contact:<%= userData[i].contact %>
+              </li>
+              <li>
+                monthlyBill:<%= userData[i].monthlyBill %>
+              </li>
+              
+              <% } %>
+            <br>
+          </ul>
          <br><br><br><br><br><br>
           <p></p>
           <hr>

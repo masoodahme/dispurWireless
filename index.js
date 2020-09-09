@@ -5,6 +5,7 @@ const mongoose=require("mongoose");
 const ejs = require("ejs");
 const bodyParser=require("body-parser");
 //const userSchema=require("./models/user");;
+const tariffSchema=require("./models/tariff");
 const passport = require("passport");
 const session=require("express-session");
 const uniqid = require('uniqid');
@@ -77,6 +78,7 @@ const userSchema=new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
+const Tariff=mongoose.model("tariff",tariffSchema);
 //local strategies
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -106,7 +108,15 @@ app.get("/manageraccesspage",function(req,res){
           console.log(err);
         }
         else{
-          res.render("manageraccesspage",{userData:users});
+          Tariff.find({},function(err,tariffs){
+            if(err)
+            {
+              console.log(err);
+            }
+            else{
+              res.render("manageraccesspage",{tariffData:tariffs,userData:users});
+            }
+          })
         }
       });
       
@@ -116,18 +126,8 @@ app.get("/manageraccesspage",function(req,res){
     }
 })
 app.get("/adminaccesspage",function(req,res){
-    if(req.isAuthenticated())
-    {console.log("db fetching");
-      User.find({}, function(err, users) {
-        console.log("db fetching");
-        if(err) {
-          console.log(err);
-        }
-        else{
-          console.log(users);
-        }
-      });
-      res.render("adminaccesspage");
+    if(req.isAuthenticated()){
+      res.render("adminaccesspage",{userData:{}});
     }
     else{
       res.redirect("/");
@@ -196,10 +196,41 @@ app.post("/login", function (req, res) {
       }
   });
 });
+
 app.get("/logout",function(req,res){
   req.logout();
   res.render("loginpage");
 });
+
+//admin portal add plans
+app.post("/addPlans",function(req,res){
+    const tariff=new Tariff({
+      name:req.body.name,
+      price:req.body.price
+    });
+    tariff.save((err,user)=>{
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        res.redirect("/adminaccesspage");
+      }
+      
+    });
+});
+//admin view customer details
+app.post("/getCustomerDetails",function(req,res){
+  User.find({registrationId:req.body.id},function(err,user){
+    if(err)
+    {
+      console.log(err);
+    }
+    else{
+      res.render("adminaccesspage",{userData:user});
+    }
+  })
+})
 app.listen(3000,function(){
   console.log("server has started");
 });
