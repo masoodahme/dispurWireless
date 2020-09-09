@@ -36,7 +36,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red"></i>Contact Number</p>
          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red"></i>Alternate Contact Number</p>
          <hr>
-
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
          
         </div>
@@ -49,9 +48,22 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <div class="w3-twothird">
     
       <div class="w3-container w3-card w3-white w3-margin-bottom">
-        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>My Plans</h2>
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>View Plans</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
+         
+          <ul>
+
+            <% for(var i=0;i<tariffData.length;i++){ %>
+            <li>
+              NAME:<%= tariffData[i].name%>
+            </li>
+            <li>
+              PRICE:<%= tariffData[i].price %>
+            </li> 
+            <% } %>
+            <br>
+          </ul>
           <br><br><br><br><br>
           <hr>
         </div>
@@ -59,9 +71,34 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       </div>
 
       <div class="w3-container w3-card w3-white">
-        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Other Plans</h2>
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>View Users</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
+          <ul>
+            <% for(var i=0;i<userData.length;i++){ %>
+            <li>
+              NAME:<%= userData[i].username %>
+            </li>
+            <li>
+              EMAIL:<%= userData[i].email %>
+            </li>
+            <li>
+              Registration Id:<%= userData[i].registrationId %>
+            </li>
+            <li>
+              address:<%= userData[i].address %>
+            </li>
+            <li>
+              contact:<%= userData[i].contact %>
+            </li>
+            <li>
+              monthlyBill:<%= userData[i].monthlyBill %>
+            </li>
+            
+            <% } %>
+            <br>
+          </ul>
+        
          <br><br><br><br><br><br>
           <p></p>
           <hr>
@@ -78,7 +115,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </div>
 
 <footer class="w3-container w3-red w3-center w3-margin-top">
-  <p>Find us on social media.</p>
+  <p>Find me on social media.</p>
   <i class="fa fa-facebook-official w3-hover-opacity"></i>
   <i class="fa fa-instagram w3-hover-opacity"></i>
   <i class="fa fa-snapchat w3-hover-opacity"></i>

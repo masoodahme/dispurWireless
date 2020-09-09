@@ -11,6 +11,7 @@ const session=require("express-session");
 const uniqid = require('uniqid');
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require('mongoose-findorcreate');
+const { post } = require("./models/tariff");
 //const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const app=express();
@@ -91,7 +92,17 @@ app.get("/", function (req, res) {
 app.get("/tariffplanspage",function(req,res){
   if(req.isAuthenticated())
   {
-    res.render("tariffplanspage");
+    Tariff.find({},function(err,tariff){
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        console.log("db accessed");
+        res.render("tariffplanspage",{tariffData:tariff});
+      }
+    }) 
+   
   }
   else{
     res.redirect("/");
@@ -101,25 +112,7 @@ app.get("/tariffplanspage",function(req,res){
 app.get("/manageraccesspage",function(req,res){
     if(req.isAuthenticated())
     {
-      console.log("db fetching");
-      User.find({role:0}, function(err, users) {
-        
-        if(err) {
-          console.log(err);
-        }
-        else{
-          Tariff.find({},function(err,tariffs){
-            if(err)
-            {
-              console.log(err);
-            }
-            else{
-              res.render("manageraccesspage",{tariffData:tariffs,userData:users});
-            }
-          })
-        }
-      });
-      
+      res.render("manageraccesspage",{userData:{}});
     }
     else{
       res.redirect("/");
@@ -171,6 +164,7 @@ app.post("/login", function (req, res) {
       password :req.body.password,
       role:1
   });
+  console.log(user);
   req.login(user,function(err){
      if(err) 
          {
@@ -205,9 +199,13 @@ app.get("/logout",function(req,res){
 //admin portal add plans
 app.post("/addPlans",function(req,res){
     const tariff=new Tariff({
-      name:req.body.name,
-      price:req.body.price
+      planname:req.body.planname,
+      typeofplan:req.body.typeofplan,
+      tarriffRate:req.body.tarrifRate,
+      validity:req.body.validity,
+      rental:req.body.rental
     });
+    console.log(tariff);
     tariff.save((err,user)=>{
       if(err)
       {
@@ -227,10 +225,70 @@ app.post("/getCustomerDetails",function(req,res){
       console.log(err);
     }
     else{
-      res.render("adminaccesspage",{userData:user});
+      res.render("manageraccesspage",{userData:user});
     }
   })
 })
+
+//go to userprofilepage
+app.get("/userprofilepage",function(req,res){
+      if(req.isAuthenticated())
+      {
+        User.find({username:req.user.username},function(err,user){
+          if(err)
+          {
+            console.log(err);
+          }
+          else{
+            console.log("updated");
+            console.log(user);
+            res.render("userprofilepage",{userData:user[0]});
+          }
+        })
+      }
+      else{
+        res.redirect("/");
+      }
+})
+//update user profile data
+app.post("/updateUserDetails",function(req,res){
+  const email=req.body.email;
+  const location=req.body.address;
+  const contact=req.body.contact;
+  const update={};
+  if(email)
+  {
+    update.email=email;
+  }
+  if(location)
+  {
+    update.location=location;
+  }
+  if(contact)
+  {
+    update.contact=contact;
+  }
+  if(req.isAuthenticated())
+  {
+    User.findOneAndUpdate({username:req.user.username},update,function(err,user){
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+       
+        res.render("userprofilepage",{userData:user});
+      }
+    })
+   
+   // res.render("userprofilepage",{userData:{}});
+  }
+  else{
+    res.redirect("/");
+  }
+})
+
+//listen server
 app.listen(3000,function(){
   console.log("server has started");
 });

@@ -9,6 +9,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+/* Logout Button Styling */
+.logoutLblPos{
+position:fixed;
+right:10px;
+top:5px;
+}
+
+label{
+    display: inline-block;
+    float: center;
+    clear: center;
+    width: 250px;
+    text-align: center; /*Change to right here if you want it close to the inputs*/
+}
+input {
+  display: inline-block;
+  float: center;
+}
+select {
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
+}
+
 </style>
 <body class="w3-black">
 
@@ -21,26 +45,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
  
    <!-- Left Column -->
    <div class="w3-third">
-   
-     <div class="w3-white w3-text-grey w3-card-4">
-       <div class="w3-display-container">
-         <img src="/w3images/avatar_hat.jpg" style="width:100%" alt="Avatar">
-         <div class="w3-display-bottomleft w3-container w3-text-black">
-           <h2>UserName</h2>
-         </div>
-       </div>
-       <div class="w3-container">
-         <p><i class="fa fa-male fa-fw w3-margin-right w3-large w3-text-red"></i>Name</p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-red"></i>Location</p>
-         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red"></i>email ID</p>
-         <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red"></i>Contact Number</p>
-         <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red"></i>Alternate Contact Number</p>
-         <hr>
-
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-         
-        </div>
-      </div><br>
 
     <!-- End Left Column -->
     </div>
@@ -49,52 +53,55 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <div class="w3-twothird">
     
       <div class="w3-container w3-card w3-white w3-margin-bottom">
-        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Add Plans</h2>
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>View & Add Plans</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
-          <form method="POST" action="/addPlans">
-            <input type="text" placeholder="Plan" name="name">
-            <input type="text" placeholder="Price" name="price">
-            <button type="submit" >Add</button>
-            <br><br><br><br><br>
-            <hr>
-          </form>
+          
+      <form method="POST" action="/addPlans">
+          <label for="name"><b>Plan Name</b></label>
+          <input type="text" placeholder="Enter Plan Name" name="planname" required><br><br>
+          <label for="typeplan"><b>Type of Plan (Data/Voice)</b></label>
+          <select name="typeofplan" id="cars">
+          <option value="data">Data</option>
+          <option value="voice">Voice</option>
+          </select><br><br>
+          <label for="tarrif"><b>Tarrif (Rate/min)</b></label>
+          <input type="number" placeholder="Enter Tariff (Rate/min)" name="tarrifRate" required min="0"><br><br>
+          <label for="validity"><b>Validity (in days)</b></label>
+          <input type="number" placeholder="Enter Validity (in days)" name="validity" required min="0">
+          <br><br>
+          <label for="rental"><b>Rental</b></label>
+          <input type="number" placeholder="Enter Rental Price" name="rental" required min="0">
+          <br><br>
+          <button type="submit">Add Plan</button>
+      </form>
+          <br><br><br><br>
+          <hr>
         </div>
         
       </div>
 
       <div class="w3-container w3-card w3-white">
-        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>View Users</h2>
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Add Billing Details</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
-          <form method="POST" action="/getCustomerDetails">
-            <input type="text" placeholder="Search user by id" name="id">
-            <input type="submit" >
-          </form>
-          <ul>
-            <% for(var i=0;i<userData.length;i++){ %>
-              <li>
-                NAME:<%= userData[i].username %>
-              </li>
-              <li>
-                EMAIL:<%= userData[i].email %>
-              </li>
-              <li>
-                Registration Id:<%= userData[i].registrationId %>
-              </li>
-              <li>
-                address:<%= userData[i].address %>
-              </li>
-              <li>
-                contact:<%= userData[i].contact %>
-              </li>
-              <li>
-                monthlyBill:<%= userData[i].monthlyBill %>
-              </li>
-              
-              <% } %>
-            <br>
-          </ul>
+
+        <form>
+
+          <label for="name"><b>Registration ID: </b></label>
+          <input type="text" placeholder="Enter Registration ID" name="regid" required><br><br>
+          
+          <label for="name"><b>Call Duration: </b></label>
+          <input type="text" placeholder="Enter Call Duration" name="callduration" required><br><br>
+          
+          <label for="name"><b>Data Used: </b></label>
+          <input type="text" placeholder="Enter Data Used" name="dataused" required><br><br>
+
+          <button type="button">Add Billing</button>
+      
+        </form>
+
+
          <br><br><br><br><br><br>
           <p></p>
           <hr>
@@ -109,6 +116,13 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   
   <!-- End Page Container -->
 </div>
+
+<!-- Logout Button -->
+<form align="right" name="form1" method="GET" action="/logout">
+  <label class="logoutLblPos">
+  <input name="submit2" type="submit" id="submit2" value="Log Out">
+  </label>
+</form>
 
 <footer class="w3-container w3-red w3-center w3-margin-top">
   <p>Find me on social media.</p>

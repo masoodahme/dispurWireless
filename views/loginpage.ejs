@@ -134,26 +134,46 @@ span.psw {
     }
 }
 
+label{
+    display: inline-block;
+    float: center;
+    clear: center;
+    width: 250px;
+    text-align: center; /*Change to right here if you want it close to the inputs*/
+}
+input {
+  display: inline-block;
+  float: center;
+}
+select {
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
+}
+
+
 </style>
 <body>
 
 <!-- Navbar -->
+<!--
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card w3-left-align w3-large">
     <img src="logo.png">
   </div>
 </div>
+-->
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">START PAGE</h1>
-  <p class="w3-xlarge">World's largest mobile data network </p>
+  <h1 class="w3-margin w3-jumbo">Dispur Wireless</h1>
+  <p class="w3-xlarge">Assam's largest wireless voice and data communications service network</p>
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-<br><br><br>
-<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
+<br><br>
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</button>
 </header>
 
-<!-- First Grid -->
+<!-- First Grid --> 
 <div class="w3-row-padding w3-black w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
@@ -186,7 +206,7 @@ span.psw {
 </div>
 
 <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
-    <h1 class="w3-margin w3-xlarge">Check anywhere!</h1>
+    <h1 class="w3-margin w3-xlarge">Follow our social media accounts to stay updated for offers and more!</h1>
 </div>
 
 <!-- Footer -->
@@ -204,7 +224,6 @@ span.psw {
 <form class="modal-content animate" action="/login" method="POST">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="logo.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
@@ -232,18 +251,17 @@ span.psw {
 
 <div id="id02" class="modal">
   <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/signup" method="POST">
+  <form class="modal-content" method="POST" action="/signup">
     <div class="imgcontainer">
       <h1>Sign Up</h1>
- <img src="logo.png" alt="Avatar" class="avatar">
       <p>Please fill in this form to create an account.</p>
       <hr>
-      <label for="name"><b>Name</b></label>
+      <label for="name"><b>Full Name</b></label>
       <input type="text" placeholder="Enter Name" name="username" required><br><br><br>
-      <label for="email"><b>Email</b></label>
+      <label for="email"><b>Email Address</b></label>
       <input type="text" placeholder="Enter Email" name="email" required><br><br><br>
 
-      <label for="address"><b>Address</b></label>
+      <label for="address"><b>House Address</b></label>
       <input type="text" placeholder="Enter Address" name="address" required><br><br><br>
 
       <label for="cnumber"><b>Contact Number</b></label>
@@ -255,6 +273,7 @@ span.psw {
       <label for="anumber"><b>Password</b></label>
       <input type="password" placeholder="Enter password" name="password" required>
       <br><br><br>
+      <label>
       <label>
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
       </label>

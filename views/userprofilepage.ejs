@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head> <link rel="shortcut icon" type="image/x-icon" href="crlogo.png" /></head>
+<title>Crimson Profile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+
+/* Logout Button Styling */
+.logoutLblPos{
+position:fixed;
+right:10px;
+top:5px;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: left; /*Change to right here if you want it close to the inputs*/
+}
+input {
+  display: inline-block;
+  float: center;
+}
+select {
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
+}
+
+</style>
+<body class="w3-black">
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+ <!-- The Grid -->
+ <div class="w3-row-padding">
+ 
+   <!-- Left Column -->
+   <div class="w3-third">
+   
+     <div class="w3-white w3-text-grey w3-card-4">
+       <div class="w3-display-container">
+         <div class="w3-display-bottomleft w3-container w3-text-black">
+           <h2>UserName</h2>
+         </div>
+       </div>
+       <div class="w3-container">
+         <p><i class="fa fa-male fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.username %></p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.address %></p>
+         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.email %></p>
+         <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.contact %></p>
+         <hr>
+
+         <br>
+
+         <div id="id02" class="modal">
+  <form class="modal-content" method="POST" action="/updateUserDetails">
+    <div class="imgcontainer">
+      <h1>Update Profile Details</h1>
+  <!-- <img src="logo.png" alt="Avatar" class="avatar"> -->
+      <p>Please enter the updated profile details</p>
+      <hr>
+      <label for="name"><b>Name</b></label>
+      <input type="text" placeholder="Enter Name" name="name"><br><br>
+      <label for="name"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email"><br><br>
+      <label for="name"><b>Location</b></label>
+      <input type="text" placeholder="Enter Location" name="address"><br><br>
+      <label for="name"><b>Contact</b></label>
+      <input type="text" placeholder="Enter Contact" name="contact"><br><br>
+      <br>
+
+      <div class="clearfix">
+        <button type="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Update Details</button>
+        <!-- <button type="submit" class="addplanbutn">Add New Plan</button> -->
+      </div>
+    </div>
+  </form>
+</div>
+
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+         
+        </div>
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird">
+    
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>My Plans & Other Plans</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b></b></h5>
+          <br><br><br><br><br>
+          <hr>
+        </div>
+        
+      </div>
+
+      <div class="w3-container w3-card w3-white">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Transaction History (Billing)</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b></b></h5>
+         <br><br><br><br><br><br>
+          <p></p>
+          <hr>
+        </div>
+        
+
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
+
+<!-- Logout Button -->
+<form align="right" name="form1" method="GET" action="/logout">
+  <label class="logoutLblPos">
+  <input name="submit2" type="submit" id="submit2" value="Log Out">
+  </label>
+</form>
+
+<footer class="w3-container w3-red w3-center w3-margin-top">
+  <p>Find us on social media.</p>
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+ 
+</footer>
+
+</body>
+</html>
+

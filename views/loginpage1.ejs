@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Dispur Wireless</title>
+<title>Crimson Reads</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -134,80 +134,33 @@ span.psw {
     }
 }
 
-/* Logout Button Styling */
-.logoutLblPos{
-position:fixed;
-right:10px;
-top:5px;
-}
-
-/* User Profile Button Styling */
-.userprofLblPos{
-position:fixed;
-left:10px;
-top:5px;
-}
-
 </style>
 <body>
 
 <!-- Navbar -->
-<!--
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card w3-left-align w3-large">
     <img src="logo.png">
   </div>
 </div>
--->
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Best tariff plans in Assam</h1>
-  <p class="w3-xlarge">Random Placeholder (Fill something later)</p>
+  <h1 class="w3-margin w3-jumbo">START PAGE</h1>
+  <p class="w3-xlarge">World's largest mobile data network </p>
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+<br><br><br>
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
 </header>
 
 <!-- First Grid -->
 <div class="w3-row-padding w3-black w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
-      <h1>Dispur Wireless Plans</h1>
+      <h1>Unlock the world of entertainment</h1>
       <h5 class="w3-padding-32"></h5>
 
-<!-- Tariff Plan Table -->	
-
-
-<div class="planTable plan_scroll_table">
-<form>
- 
-	<table width="800">
-		<thead>
-			<th style="text-align:left">Plan Name</th>
-			<th style="text-align:left"><span>Type of Plan (Data/Voice)</span></th>
-			<th style="text-align:left"><span>Tarrif (Rate/min)</th>
-			<th style="text-align:left"><span>Validity (in days)</span></th>
-			<th style="text-align:left"><span>Rental Price</span></th>
-    </thead>
-    <tbody>	
-      <% for(var i=0;i<tariffData.length;i++){ %>
-        <tr title="Voice plans at ₹ 200 for 30 days"> <!-- Should onclick command be added here ? -->
-				  <td class="paytm_plan_content">
-          <input type="radio" id="Plan_1" name="redirect" value="redirect.html" />
-            <%= tariffData[i].planname%>
-          </td>
-				  <td><%= tariffData[i].typeofplan%></td>
-          <td><%= tariffData[i].tarriffRate%></td>
-          <td><%= tariffData[i].validity%></td>
-				  <td>₹<%= tariffData[i].rental %><span class="sPlan"></span></td>
-        </tr>
-      <% } %>
-      </tbody>
-  </table>
-  <br>
-  <input type="submit" value="Submit" />  
-</form>														
-
-</div>
-
+      <p class="w3-text-grey">Get unlimited data plan.</p>
     </div>
 
     <div class="w3-third w3-center">
@@ -224,10 +177,10 @@ top:5px;
     </div>
 
     <div class="w3-twothird">
-      <h1>Enjoy the best broadband plans in Assam</h1>
+      <h1>Get exclusive offers & account information at one place</h1>
       <h5 class="w3-padding-32"></h5>
 
-      <p class="w3-text-white"> Experience the internet at the fastest speeds with our fiber optic broadband. Enjoy a seamless connection, perfect for connecting multiple devices over WiFi and LAN. With our fiber optic technology, you will get superfast connectivity and the best broadband internet speeds at all times. </p>
+      <p class="w3-text-white"></p>
     </div>
   </div>
 </div>
@@ -248,7 +201,7 @@ top:5px;
  </div>
 </footer>
 <div id="id01" class="modal">
-<form class="modal-content animate" action="/action_page.php">
+<form class="modal-content animate" action="/login" method="POST">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="logo.png" alt="Avatar" class="avatar">
@@ -256,11 +209,11 @@ top:5px;
 
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="username" required>
 <br><br><br>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
         
       <button type="submit">Login</button>
       <label>
@@ -279,14 +232,14 @@ top:5px;
 
 <div id="id02" class="modal">
   <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/action_page.php">
+  <form class="modal-content" action="/signup" method="POST">
     <div class="imgcontainer">
       <h1>Sign Up</h1>
  <img src="logo.png" alt="Avatar" class="avatar">
       <p>Please fill in this form to create an account.</p>
       <hr>
       <label for="name"><b>Name</b></label>
-      <input type="text" placeholder="Enter Name" name="name" required><br><br><br>
+      <input type="text" placeholder="Enter Name" name="username" required><br><br><br>
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required><br><br><br>
 
@@ -298,6 +251,9 @@ top:5px;
       <br><br><br>
       <label for="anumber"><b>Alternate Number</b></label>
       <input type="text" placeholder="Enter Alternate Number" name="anumber" required>
+      <br><br><br>
+      <label for="anumber"><b>Password</b></label>
+      <input type="password" placeholder="Enter password" name="password" required>
       <br><br><br>
       <label>
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -312,22 +268,6 @@ top:5px;
     </div>
   </form>
 </div>
-
-<!-- Logout Button -->
-<form align="right" name="form1" method="GET" action="/logout">
-  <label class="logoutLblPos">
-  <input name="submit2" type="submit" id="submit2" value="Log Out">
-  </label>
-</form>
-
-<!-- User Profile Button -->
-<div style="float:left">
-  <form align="left" name="form1"  method="GET" action="/userprofilepage">
-    <label class="userprofLblPos">
-    <input name="submit2" type="submit" id="submit2" value="User Profile"></label>
-    </label>
-  </form>
-  </div>
 
 <script>
 // Get the modal
