@@ -4,8 +4,7 @@ const express=require("express");
 const mongoose=require("mongoose");
 const ejs = require("ejs");
 const bodyParser=require("body-parser");
-//const userSchema=require("./models/user");
-const counterSchema=require("./models/counters");
+//const userSchema=require("./models/user");;
 const passport = require("passport");
 const session=require("express-session");
 const uniqid = require('uniqid');
@@ -72,7 +71,7 @@ const userSchema=new mongoose.Schema({
   },
   role:{
       type:Number,
-     // default:0//0-->customer 1-->admin portal 2-->relationship manager
+     default:0//0-->customer 1-->admin portal 2-->relationship manager
   }
 },{timestamps:true })
 userSchema.plugin(passportLocalMongoose);
@@ -97,7 +96,43 @@ app.get("/tariffplanspage",function(req,res){
   }
   
 })
-
+app.get("/manageraccesspage",function(req,res){
+    if(req.isAuthenticated())
+    {
+      console.log("db fetching");
+      User.find({role:0}, function(err, users) {
+        
+        if(err) {
+          console.log(err);
+        }
+        else{
+          res.render("manageraccesspage",{userData:users});
+        }
+      });
+      
+    }
+    else{
+      res.redirect("/");
+    }
+})
+app.get("/adminaccesspage",function(req,res){
+    if(req.isAuthenticated())
+    {console.log("db fetching");
+      User.find({}, function(err, users) {
+        console.log("db fetching");
+        if(err) {
+          console.log(err);
+        }
+        else{
+          console.log(users);
+        }
+      });
+      res.render("adminaccesspage");
+    }
+    else{
+      res.redirect("/");
+    }
+})
 app.post("/signup", function (req, res) {
  
   const password=req.body.password;
@@ -111,6 +146,8 @@ app.post("/signup", function (req, res) {
      address:req.body.address,
      contact:req.body.cnumber,
      alternatePhno:req.body.anumber,
+     role:0,
+     monthlyBill:0
   }, password, function (err, user) {
       if (err) {
           console.log(err);
@@ -128,12 +165,12 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  //level 5 authentication
+
   const user=new User({
       username: req.body.username,
-      password :req.body.password
+      password :req.body.password,
+      role:1
   });
-  console.log(user);
   req.login(user,function(err){
      if(err) 
          {
@@ -141,12 +178,21 @@ app.post("/login", function (req, res) {
           res.render("loginpage");
          }
       else{
-        console.log("hheee");
+    
            passport.authenticate("local")(req,res,function(){
-            console.log(user);
-             console.log("hh");
-           res.redirect("/tariffplanspage");
-          });     
+           if(user.username==="manager")
+           {
+              res.redirect("/manageraccesspage");
+           }
+           else if(user.username==="admin")
+           {
+             res.redirect("/adminaccesspage");
+           }
+           else{
+            res.redirect("/tariffplanspage");
+            }
+           }
+          );     
       }
   });
 });
