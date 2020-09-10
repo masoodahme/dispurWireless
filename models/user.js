@@ -26,8 +26,11 @@ const userSchema=new mongoose.Schema({
        // default:null
     },
     subscription:{
-        type:ObjectId,
-        ref:"tariff"
+        type:[String],
+    },
+    date:{
+        type:date,
+        default:Date.now
     },
    password:{
         type:String   

@@ -6,6 +6,7 @@ const ejs = require("ejs");
 const bodyParser=require("body-parser");
 //const userSchema=require("./models/user");;
 const tariffSchema=require("./models/tariff");
+const transactionSchema=require("./models/transaction");
 const passport = require("passport");
 const session=require("express-session");
 const uniqid = require('uniqid');
@@ -34,6 +35,7 @@ mongoose.connect(process.env.DATABASE,{
   useUnifiedTopology: true
 });
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 const userSchema=new mongoose.Schema({
   username:{
       type:String,
@@ -80,6 +82,7 @@ userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
 const Tariff=mongoose.model("tariff",tariffSchema);
+const Transaction=mongoose.model("transaction",transactionSchema);
 //local strategies
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -100,6 +103,26 @@ app.get("/tariffplanspage",function(req,res){
       else{
         console.log("db accessed");
         res.render("tariffplanspage",{tariffData:tariff});
+      }
+    }) 
+   
+  }
+  else{
+    res.redirect("/");
+  }
+  
+})
+app.get("/tariffplanspageadmin",function(req,res){
+  if(req.isAuthenticated())
+  {
+    Tariff.find({},function(err,tariff){
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        console.log("db accessed");
+        res.render("tariffplanspageadmin",{tariffData:tariff});
       }
     }) 
    
@@ -132,6 +155,7 @@ app.post("/signup", function (req, res) {
   //adding the user details to the database with hashing
   const registrationId=uniqid();
  // console.log(registrationId);
+ const arr=[""];
   User.register({
      username:req.body.username,
      email:req.body.email,
@@ -140,7 +164,7 @@ app.post("/signup", function (req, res) {
      contact:req.body.cnumber,
      alternatePhno:req.body.anumber,
      role:0,
-     monthlyBill:0
+     monthlyBill:0,
   }, password, function (err, user) {
       if (err) {
           console.log(err);
@@ -180,7 +204,7 @@ app.post("/login", function (req, res) {
            }
            else if(user.username==="admin")
            {
-             res.redirect("/adminaccesspage");
+             res.redirect("/tariffplanspageadmin");
            }
            else{
             res.redirect("/tariffplanspage");
@@ -212,7 +236,7 @@ app.post("/addPlans",function(req,res){
         console.log(err);
       }
       else{
-        res.redirect("/adminaccesspage");
+        res.redirect("/tariffplanspageadmin");
       }
       
     });
@@ -242,7 +266,7 @@ app.get("/userprofilepage",function(req,res){
           else{
             console.log("updated");
             console.log(user);
-            res.render("userprofilepage",{userData:user[0]});
+            res.render("userprofilepage",{userData:user[0],subs:user[0].subscription});
           }
         })
       }
@@ -276,8 +300,8 @@ app.post("/updateUserDetails",function(req,res){
         console.log(err);
       }
       else{
-       
-        res.render("userprofilepage",{userData:user});
+       console.log(user);
+        res.redirect("/userprofilepage");
       }
     })
    
@@ -287,7 +311,39 @@ app.post("/updateUserDetails",function(req,res){
     res.redirect("/");
   }
 })
-
+//user select plan
+app.post("/selectPlan",function(req,res){
+    const planname=req.body.planname;
+    User.findOneAndUpdate({username:req.user.username},{$push:{subscription:planname}},
+      function(err,user)
+      {
+        if(err)
+        {
+          console.log(err);
+        }
+        console.log(user);
+        console.log(planname + "ddd ");
+        res.render("userprofilepage",{userData:user,subs:planname});
+      })
+})
+//admin generate bill
+app.post("/generateBill",function(req,res){
+  const registerID=req.body.regid;
+  const callduration=req.body.callduration;
+  const dataused=req.body.dataused;
+  //calculation
+  const generateBill=callduration/dataused;
+  User.findOneAndUpdate({registrationId:registerID},{monthlyBill:generateBill},
+    function(err,user)
+    {
+      if(err)
+      {
+        console.log(err);
+      }
+      console.log(user);
+      res.redirect("/adminaccesspage");
+    })
+})
 //listen server
 app.listen(3000,function(){
   console.log("server has started");

@@ -52,6 +52,7 @@ select {
          </div>
        </div>
        <div class="w3-container">
+        <p>REGISTRATION ID : <%= userData.registrationId%></p>
          <p><i class="fa fa-male fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.username %></p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.address %></p>
          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red"></i><%= userData.email %></p>
@@ -95,12 +96,14 @@ select {
     </div>
 
     <!-- Right Column -->
+    
     <div class="w3-twothird">
     
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>My Plans & Other Plans</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
+          Your Current Plan: <%= subs%>
           <br><br><br><br><br>
           <hr>
         </div>
@@ -111,6 +114,7 @@ select {
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>Transaction History (Billing)</h2>
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
+          Your Plan Bill : <%= userData.monthlyBill %>
          <br><br><br><br><br><br>
           <p></p>
           <hr>

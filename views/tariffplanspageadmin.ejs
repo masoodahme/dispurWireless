@@ -141,18 +141,28 @@ right:10px;
 top:5px;
 }
 
-/* User Profile Button Styling */
-.userprofLblPos{
-position:fixed;
-left:10px;
-top:5px;
+label{
+    display: inline-block;
+    float: center;
+    clear: center;
+    width: 250px;
+    text-align: center; /*Change to right here if you want it close to the inputs*/
+}
+input {
+  display: inline-block;
+  float: center;
+}
+select {
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
 }
 
 </style>
 <body>
 
 <!-- Navbar -->
-<!--
+<!-- 
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card w3-left-align w3-large">
     <img src="logo.png">
@@ -162,7 +172,7 @@ top:5px;
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Best tariff plans in Assam</h1>
+  <h1 class="w3-margin w3-jumbo">Tariff plans in Assam</h1>
   <p class="w3-xlarge">Random Placeholder (Fill something later)</p>
 </header>
 
@@ -170,15 +180,11 @@ top:5px;
 <div class="w3-row-padding w3-black w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
-      <h1>Dispur Wireless Plans</h1>
+      <h1>Plans Currently Offered</h1>
       <h5 class="w3-padding-32"></h5>
 
 <!-- Tariff Plan Table -->	
-
-
 <div class="planTable plan_scroll_table">
-<form method="POST" action="/selectPlan">
- 
 	<table width="800">
 		<thead>
 			<th style="text-align:left">Plan Name</th>
@@ -186,25 +192,67 @@ top:5px;
 			<th style="text-align:left"><span>Tarrif (Rate/min)</th>
 			<th style="text-align:left"><span>Validity (in days)</span></th>
 			<th style="text-align:left"><span>Rental Price</span></th>
-    </thead>
-    <tbody>	
-      <% for(var i=0;i<tariffData.length;i++){ %>
-        <tr title="Voice plans at ₹ 200 for 30 days"> <!-- Should onclick command be added here ? -->
-				  <td class="paytm_plan_content">
-          <input type="radio" id="<%= tariffData[i].planname%>"" name="planname" value="<%= tariffData[i].planname%>" />
+      </thead>
+      <tbody>	
+        <% for(var i=0;i<tariffData.length;i++){ %>
+          <tr title="Voice plans at ₹ 200 for 30 days"> <!-- Should onclick command be added here ? -->
+            <td class="paytm_plan_content">
+            <!-- <input type="radio" id="<%= tariffData[i].planname%>"" name="planname" value="<%= tariffData[i].planname%>" /> -->
             <%= tariffData[i].planname%>
-          </td>
-				  <td><%= tariffData[i].typeofplan%></td>
-          <td><%= tariffData[i].tarriffRate%></td>
-          <td><%= tariffData[i].validity%></td>
-				  <td>₹<%= tariffData[i].rental %><span class="sPlan"></span></td>
-        </tr>
-      <% } %>
+            </td>
+            <td><%= tariffData[i].typeofplan%></td>
+            <td><%= tariffData[i].tarriffRate%></td>
+            <td><%= tariffData[i].validity%></td>
+            <td>₹<%= tariffData[i].rental %><span class="sPlan"></span></td>
+          </tr>
+        <% } %>
       </tbody>
   </table>
-  <br>
-  <input type="submit" value="Submit" />  
-</form>														
+
+  <!--
+  <form> 
+    <input type="submit" value="Create New Plan">  
+  </form>
+  -->
+  <form  method="GET" action="/adminaccesspage">
+  <button type="submit" style="width:auto;">Add New Plan</button>
+ </form>
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="imgcontainer">
+      <h1>New Plan Details</h1>
+  <!-- <img src="logo.png" alt="Avatar" class="avatar"> -->
+      <p>Please enter the details of the new plan to be added.</p>
+      <hr>
+      <label for="name"><b>Plan Name</b></label>
+      <input type="text" placeholder="Enter Plan Name" name="planname" required /><br><br><br>
+      <label for="typeplan"><b>Type of Plan (Data/Voice)</b></label>
+      <input type="text" placeholder="Enter Type of Plan" name="planname" required /><br><br><br>
+      <!--
+      <select name="Type of Plan" id="typeplan">
+      <option value="data">Data</option>
+      <option value="voice">Voice</option>
+      </select><br><br><br>
+      -->
+
+      <label for="tarrif"><b>Tarrif (Rate/min)</b></label>
+      <input type="number" placeholder="Enter Tariff (Rate/min)" name="tarrif" required min="0" /><br><br><br>
+
+      <label for="validity"><b>Validity (in days)</b></label>
+      <input type="number" placeholder="Enter Validity (in days)" name="validity" required min="0" />
+      <br><br><br>
+      <label for="rental"><b>Rental</b></label>
+      <input type="number" placeholder="Enter Rental Price" name="rental" required min="0" />
+      <br><br><br>
+      
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Add New Plan</button>
+        <!-- <button type="submit" class="addplanbutn">Add New Plan</button> -->
+      </div>
+    </div>
+  </form>
+</div>
 
 </div>
 
@@ -214,26 +262,6 @@ top:5px;
       <i class="fa fa-star w3-padding-64 w3-text-red"></i>
     </div>
   </div>
-</div>
-
-<!-- Second Grid -->
-<div class="w3-row-padding w3-red w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="w3-third w3-center">
-      <i class="fa fa-book w3-padding-64 w3-text-white w3-margin-right"></i>
-    </div>
-
-    <div class="w3-twothird">
-      <h1>Enjoy the best broadband plans in Assam</h1>
-      <h5 class="w3-padding-32"></h5>
-
-      <p class="w3-text-white"> Experience the internet at the fastest speeds with our fiber optic broadband. Enjoy a seamless connection, perfect for connecting multiple devices over WiFi and LAN. With our fiber optic technology, you will get superfast connectivity and the best broadband internet speeds at all times. </p>
-    </div>
-  </div>
-</div>
-
-<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
-    <h1 class="w3-margin w3-xlarge">Check anywhere!</h1>
 </div>
 
 <!-- Footer -->
@@ -247,71 +275,6 @@ top:5px;
     <i class="fa fa-linkedin w3-hover-opacity"></i>
  </div>
 </footer>
-<div id="id01" class="modal">
-<form class="modal-content animate" action="/action_page.php">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="logo.png" alt="Avatar" class="avatar">
-    </div>
-
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-<br><br><br>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-        
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
-
-    <div class="container" style="background-color:#DC143C">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw"><a href="#">Forgot password?</a></span>
-    </div>
-</div>
-  </form>
-
-<!-- <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</button> -->
-
-<!-- <div id="id02" class="modal">
-  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/action_page.php">
-    <div class="imgcontainer">
-      <h1>Sign Up</h1>
- <img src="logo.png" alt="Avatar" class="avatar">
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-      <label for="name"><b>Name</b></label>
-      <input type="text" placeholder="Enter Name" name="name" required><br><br><br>
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required><br><br><br>
-
-      <label for="address"><b>Address</b></label>
-      <input type="text" placeholder="Enter Address" name="address" required><br><br><br>
-
-      <label for="cnumber"><b>Contact Number</b></label>
-      <input type="text" placeholder="Enter Number" name="cnumber" required>
-      <br><br><br>
-      <label for="anumber"><b>Alternate Number</b></label>
-      <input type="text" placeholder="Enter Alternate Number" name="anumber" required>
-      <br><br><br>
-      <label>
-        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-      </label>
-
-      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Sign Up</button>
-      </div>
-    </div>
-  </form>
-</div> -->
 
 <!-- Logout Button -->
 <form align="right" name="form1" method="GET" action="/logout">
@@ -319,15 +282,6 @@ top:5px;
   <input name="submit2" type="submit" id="submit2" value="Log Out">
   </label>
 </form>
-
-<!-- User Profile Button -->
-<div style="float:left">
-  <form align="left" name="form1"  method="GET" action="/userprofilepage">
-    <label class="userprofLblPos">
-    <input name="submit2" type="submit" id="submit2" value="User Profile"></label>
-    </label>
-  </form>
-  </div>
 
 <script>
 // Get the modal

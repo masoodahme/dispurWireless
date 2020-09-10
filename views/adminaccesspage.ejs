@@ -86,7 +86,7 @@ select {
         <div class="w3-container">
           <h5 class="w3-opacity"><b></b></h5>
 
-        <form>
+        <form method="POST" action="/generateBill">
 
           <label for="name"><b>Registration ID: </b></label>
           <input type="text" placeholder="Enter Registration ID" name="regid" required><br><br>
@@ -97,7 +97,7 @@ select {
           <label for="name"><b>Data Used: </b></label>
           <input type="text" placeholder="Enter Data Used" name="dataused" required><br><br>
 
-          <button type="button">Add Billing</button>
+          <button type="submit">Add Billing</button>
       
         </form>
 
